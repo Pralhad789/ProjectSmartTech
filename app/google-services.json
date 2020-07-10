@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "293244134805",
+    "firebase_url": "https://projectsmarttech-fc2d8.firebaseio.com",
+    "project_id": "projectsmarttech-fc2d8",
+    "storage_bucket": "projectsmarttech-fc2d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293244134805:android:237d7d87b7f37d9230429c",
+        "android_client_info": {
+          "package_name": "com.example.smarttech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293244134805-l8ohhii5tudtuukdganqc76n4d254ras.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smarttech",
+            "certificate_hash": "f08beebedca1684ab4fff6a3dc0dd5cb910b52fe"
+          }
+        },
+        {
+          "client_id": "293244134805-rt31nnr801mb6nlmjdautgpesebuf4mf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF-xIy70PjthdUvQcURg-Oipl3_Pstlxw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293244134805-rt31nnr801mb6nlmjdautgpesebuf4mf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
