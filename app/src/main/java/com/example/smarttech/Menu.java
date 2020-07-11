@@ -42,10 +42,10 @@ public class Menu extends AppCompatActivity {
 //            finish();
 //        });
 //
-//        btnCustomer.setOnClickListener(v -> {
-//            startActivity(new Intent(Menu.this, CustomersPage.class));
-//            finish();
-//        });
+        btnCustomer.setOnClickListener(v -> {
+            startActivity(new Intent(Menu.this, CustomersPage.class));
+            finish();
+        });
 //        btnSale.setOnClickListener(v -> {
 //            startActivity(new Intent(Menu.this, SalesPage.class));
 //            finish();

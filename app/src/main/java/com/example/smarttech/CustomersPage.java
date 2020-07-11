@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.api.services.drive.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +18,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CustomersPage extends AppCompatActivity {
 //    private DatabaseReference mDatabase;
@@ -92,22 +96,29 @@ public class CustomersPage extends AppCompatActivity {
 //
 //        reff = FirebaseDatabase.getInstance().getReference().child("CustomerDetails");
 //
-//        reff.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists())
-//                    maxid = (dataSnapshot.getChildrenCount());
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                    maxid = (dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         custsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                String customercode = custcode.getText().toString();
+//                String customername = custname.getText().toString();
+//                String customeraddress = custaddress.getText().toString();
+//                String customerbalance = custbalance.getText().toString();
+//                String customersaleamt = custsaleamt.getText().toString();
+//                String customerrecievedamt = custrecievedamt.getText().toString();
 
                 FirebaseUser user = mAuth.getCurrentUser();
                 String userId = user.getUid();
@@ -119,7 +130,14 @@ public class CustomersPage extends AppCompatActivity {
                 custmaster.setCustSaleamt(custsaleamt.getText().toString().trim());
                 custmaster.setCustRecievedamt(custrecievedamt.getText().toString().trim());
 
-                myRef.child(userId).child("CustomerDetails").setValue(custmaster);
+                myRef.child(userId).child("CustomerDetails").push().setValue(custmaster);
+
+//                myRef.child(userId).child("CustomerDetails").child(customercode).setValue(customercode);
+
+//                DatabaseReference custdetailsref = myRef.child(userId).child("CustomerDetails").child(customercode);
+//
+//                Map<String, User> custdetails = new HashMap<>();
+//                custdetails.put("Customer Name",new User());
 
                 Toast.makeText(CustomersPage.this, "Data Inserted Successfully",Toast.LENGTH_LONG).show();
             }
