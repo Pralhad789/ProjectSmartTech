@@ -37,11 +37,11 @@ public class Menu extends AppCompatActivity {
             viewTransactions.setVisibility(View.VISIBLE);
         });
 
-//        btnItems.setOnClickListener(v -> {
-//            startActivity(new Intent(Menu.this, ItemsPage.class));
-//            finish();
-//        });
-//
+        btnItems.setOnClickListener(v -> {
+            startActivity(new Intent(Menu.this, ItemsPage.class));
+            finish();
+        });
+
         btnCustomer.setOnClickListener(v -> {
             startActivity(new Intent(Menu.this, CustomersPage.class));
             finish();

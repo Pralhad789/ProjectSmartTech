@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     toastMessage("Successfully signed in with: " + user.getEmail());
-                    startActivity(new Intent(LoginActivity.this, Menu.class));
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 String pass = mpassword.getText().toString();
                 if(!email.equals("") && !pass.equals("")){
                     mAuth.signInWithEmailAndPassword(email,pass);
+                    startActivity(new Intent(LoginActivity.this, Menu.class));
                 }else{
                     toastMessage("You didn't fill in all the fields.");
                 }

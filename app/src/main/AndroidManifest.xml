@@ -12,6 +12,7 @@
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".Menu"></activity>
         <activity android:name=".CustomersPage"></activity>
+        <activity android:name=".ItemsPage"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
