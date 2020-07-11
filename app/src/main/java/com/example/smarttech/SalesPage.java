@@ -1,5 +1,6 @@
 package com.example.smarttech;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.api.services.drive.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,38 +19,34 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Map;
+public class SalesPage extends AppCompatActivity {
 
-public class CustomersPage extends AppCompatActivity {
-
-    private static final String TAG = "CustomersPage";
+    private static final String TAG = "Salespage";
 
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
 
-    EditText custcode,custname, custaddress, custbalance, custsaleamt, custrecievedamt;
-    Button custsubmit;
-    CustomerMaster custmaster;
+    EditText supplcode, supplname, suppladdr, supplbalc, supplbillmt, supplpaidamt;
+    Button supplier_submit,seestockbtn;
 
-    long maxid = 0;
+    SupplierMaster suppliermaster;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customers_page);
+        setContentView(R.layout.activity_sales_page);
 
+        supplcode = findViewById(R.id.edit_suppliercode);
+        supplname = findViewById(R.id.edit_suppliername);
+        suppladdr = findViewById(R.id.edit_supplieraddr);
+        supplbalc = findViewById(R.id.edit_supplierbalc);
+        supplbillmt = findViewById(R.id.edit_supplierbillamt);
+        supplpaidamt = findViewById(R.id.edit_supplierpaidamt);
+        supplier_submit = findViewById(R.id.btn_submitsupplier);
 
-        custcode = findViewById(R.id.edit_custcode);
-        custname = findViewById(R.id.edit_custname);
-        custaddress = findViewById(R.id.edit_custaddress);
-        custbalance = findViewById(R.id.edit_custbalance);
-        custsaleamt = findViewById(R.id.edit_custsaleamt);
-        custrecievedamt = findViewById(R.id.edit_custrecievedamt);
-        custsubmit = findViewById(R.id.btn_addcustdata);
-        custmaster = new CustomerMaster();
+        suppliermaster = new SupplierMaster();
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -87,45 +83,35 @@ public class CustomersPage extends AppCompatActivity {
             }
         });
 
-
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists())
-//                    maxid = (dataSnapshot.getChildrenCount());
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
-        custsubmit.setOnClickListener(new View.OnClickListener() {
+        supplier_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 FirebaseUser user = mAuth.getCurrentUser();
                 String userId = user.getUid();
 
-                custmaster.setCustCode(custcode.getText().toString().trim());
-                custmaster.setCustName(custname.getText().toString().trim());
-                custmaster.setCustaddress(custaddress.getText().toString().trim());
-                custmaster.setCustBalance(custbalance.getText().toString().trim());
-                custmaster.setCustSaleamt(custsaleamt.getText().toString().trim());
-                custmaster.setCustRecievedamt(custrecievedamt.getText().toString().trim());
+                suppliermaster.setSupplcode(supplcode.getText().toString().trim());
+                suppliermaster.setSupplname(supplname.getText().toString().trim());
+                suppliermaster.setSupplbalc(supplbalc.getText().toString().trim());
+                suppliermaster.setSuppladdr(suppladdr.getText().toString().trim());
+                suppliermaster.setSupplbillmt(supplbillmt.getText().toString().trim());
+                suppliermaster.setSupplpaidamt(supplpaidamt.getText().toString().trim());
 
-                myRef.child(userId).child("CustomerDetails").push().setValue(custmaster);
+                myRef.child(userId).child("SupplierDetails").push().setValue(suppliermaster);
 
 
-                Toast.makeText(CustomersPage.this, "Data Inserted Successfully",Toast.LENGTH_LONG).show();
+
+                Toast.makeText(SalesPage.this, "Data Inserted Successfully",Toast.LENGTH_LONG).show();
             }
         });
 
 
-    }
 
+//        seestockbtn = findViewById(R.id.see_stock);
+//        seestockbtn.setOnClickListener(v -> {
+//            startActivity(new Intent(SalesPage.this, StocksPage.class));
+//            finish();
+//        });
+    }
 
 
     @Override
@@ -142,7 +128,7 @@ public class CustomersPage extends AppCompatActivity {
         }
     }
 
-    //add a toast to show when successfully signed in
+
 
     private void toastMessage(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
