@@ -31,6 +31,8 @@ public class MilkCollection extends AppCompatActivity {
     EditText custcode,custname, fat, SNF, lacto, rate, litres, amount;
     Button custsearch, custdatasubmit;
 
+    MilkCollectionData collectionData;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_milkcollection);
@@ -40,8 +42,11 @@ public class MilkCollection extends AppCompatActivity {
         fat = findViewById(R.id.edit_fat);
         lacto = findViewById(R.id.edit_lacto);
         rate = findViewById(R.id.edit_rate);
+        rate.setText("2");
         litres = findViewById(R.id.edit_litres);
         amount = findViewById(R.id.edit_amount);
+
+        collectionData = new MilkCollectionData();
 
         custsearch = findViewById(R.id.btn_searchcustdata);
         custdatasubmit = findViewById(R.id.btn_addcustdata);
@@ -69,15 +74,18 @@ public class MilkCollection extends AppCompatActivity {
 
 
         FirebaseUser user = mAuth.getCurrentUser();
-        String userId = user.getUid();
-        String customercode = custcode.getText().toString();
-        collecref = myRef.child(userId).child("CustomerDetails").child("20").child("custName");
+//        String userId = user.getUid();
+//        String customercode = custcode.getText().toString();
+//        collecref = myRef.child(userId).child("CustomerDetails").child("20").child("custName");
 
 
         custsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                String userId = user.getUid();
+                String customercode = custcode.getText().toString();
+                collecref = myRef.child(userId).child("CustomerDetails").child(customercode).child("custName");
                 //String customercode = custcode.getText().toString();
 
                 //Query query = FirebaseDatabase.getInstance().getReference("CustomerDetails").orderByChild("custcode").equalTo(customercode);
@@ -86,7 +94,7 @@ public class MilkCollection extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-//                        if(snapshot.hasChild("20"))
+//                        if(snapshot.hasChild(customercode))
 //                        {
                             String customername = snapshot.getValue(String.class);
                             custname.setText(customername);
@@ -103,6 +111,37 @@ public class MilkCollection extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+//        int inputlitres = Integer.parseInt(litres.getText().toString());
+//        int inputrate = Integer.parseInt(rate.getText().toString());
+//        int outputamt =  inputlitres * inputrate;
+//        amount.setText(String.valueOf(outputamt));
+
+        custdatasubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                FirebaseUser user = mAuth.getCurrentUser();
+                String userId = user.getUid();
+                String customercode = custcode.getText().toString();
+
+                collectionData.setCustcode(custcode.getText().toString().trim());
+                collectionData.setCustname(custname.getText().toString().trim());
+                collectionData.setFat(fat.getText().toString().trim());
+                collectionData.setSNF(SNF.getText().toString().trim());
+                collectionData.setLacto(lacto.getText().toString().trim());
+                collectionData.setRate(rate.getText().toString().trim());
+                collectionData.setLitres(litres.getText().toString().trim());
+                collectionData.setAmount(amount.getText().toString().trim());
+
+                //myRef.child(userId).child("CustomerDetails").push().setValue(custmaster);
+                myRef.child(userId).child("MilkCollectionDetails").child(customercode).setValue(collectionData);
+
+
+                Toast.makeText(MilkCollection.this, "Data Inserted Successfully",Toast.LENGTH_LONG).show();
             }
         });
 
