@@ -108,6 +108,7 @@ public class CustomersPage extends AppCompatActivity {
 
                 FirebaseUser user = mAuth.getCurrentUser();
                 String userId = user.getUid();
+                String customercode = custcode.getText().toString();
 
                 custmaster.setCustCode(custcode.getText().toString().trim());
                 custmaster.setCustName(custname.getText().toString().trim());
@@ -116,7 +117,8 @@ public class CustomersPage extends AppCompatActivity {
                 custmaster.setCustSaleamt(custsaleamt.getText().toString().trim());
                 custmaster.setCustRecievedamt(custrecievedamt.getText().toString().trim());
 
-                myRef.child(userId).child("CustomerDetails").push().setValue(custmaster);
+                //myRef.child(userId).child("CustomerDetails").push().setValue(custmaster);
+                myRef.child(userId).child("CustomerDetails").child(customercode).setValue(custmaster);
 
 
                 Toast.makeText(CustomersPage.this, "Data Inserted Successfully",Toast.LENGTH_LONG).show();

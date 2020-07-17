@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Menu extends AppCompatActivity {
-    Button btnMaster, btnTransactions, btnReport, btnSale, btnStock, btnItems, btnCustomer;
+    Button btnMaster, btnTransactions, btnReport, btnSale, btnStock, btnItems, btnCustomer,btnmilkcollec;
     LinearLayout viewMaster, viewTransactions;
 
     @Override
@@ -24,6 +24,7 @@ public class Menu extends AppCompatActivity {
         btnItems = findViewById(R.id.btn_items);
         btnCustomer = findViewById(R.id.btn_customer);
         btnReport = findViewById(R.id.btn_report);
+        btnmilkcollec = findViewById(R.id.btn_milkcollection);
 
         viewMaster = findViewById(R.id.view_master);
         viewTransactions = findViewById(R.id.view_transactions);
@@ -48,6 +49,11 @@ public class Menu extends AppCompatActivity {
         });
         btnSale.setOnClickListener(v -> {
             startActivity(new Intent(Menu.this, SalesPage.class));
+            finish();
+        });
+
+        btnmilkcollec.setOnClickListener(v -> {
+            startActivity(new Intent(Menu.this, MilkCollection.class));
             finish();
         });
 //        btnStock.setOnClickListener(v -> {
