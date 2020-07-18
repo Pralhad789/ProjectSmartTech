@@ -60,9 +60,9 @@ public class Menu extends AppCompatActivity {
 //            startActivity(new Intent(Menu.this, StocksPage.class));
 //            finish();
 //        });
-//        btnReport.setOnClickListener(v -> {
-//            startActivity(new Intent(Menu.this, ReportsPage.class));
-//            finish();
-//        });
+        btnReport.setOnClickListener(v -> {
+            startActivity(new Intent(Menu.this, ReportsPage.class));
+            finish();
+        });
     }
 }

@@ -88,7 +88,7 @@ public class MilkCollection extends AppCompatActivity {
             }
         });
 
- 
+
         custsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
