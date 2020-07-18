@@ -2,7 +2,11 @@ package com.example.smarttech;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
@@ -35,10 +39,12 @@ public class ReportsPage extends AppCompatActivity {
     private DatabaseReference myRef;
 
 
+    private static final int STORAGE_PERMISSION_CODE = 101;
 
     EditText customercode;
     Button generatepdf;
 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,11 +74,14 @@ public class ReportsPage extends AppCompatActivity {
         };
 
 
+
+
         generatepdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                  createPDF();
+                checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,STORAGE_PERMISSION_CODE);
+                createPDF();
 
             }
         });
@@ -105,10 +114,10 @@ public class ReportsPage extends AppCompatActivity {
 
 
                 page.getCanvas().drawText("Customer Code: ",0,25*i+25,new Paint());
-                page.getCanvas().drawText(custcode, 55, 25*i+25, new Paint());
+                page.getCanvas().drawText(custcode, 105, 25*i+25, new Paint());
 
                 page.getCanvas().drawText("Customer Name: ",0,25*i+45,new Paint());
-                page.getCanvas().drawText(customername, 55, 25*i+45, new Paint());
+                page.getCanvas().drawText(customername, 105, 25*i+45, new Paint());
 
                 page.getCanvas().drawText("Quantity: ",0,25*i+65,new Paint());
                 page.getCanvas().drawText(quantity, 55, 25*i+65, new Paint());
@@ -140,6 +149,51 @@ public class ReportsPage extends AppCompatActivity {
     }
 
 
+    public void checkPermission(String permission, int requestCode)
+    {
+        if (ContextCompat.checkSelfPermission(ReportsPage.this, permission)
+                == PackageManager.PERMISSION_DENIED) {
+
+            // Requesting the permission
+            ActivityCompat.requestPermissions(ReportsPage.this,
+                    new String[] { permission },
+                    requestCode);
+        }
+        else {
+            Toast.makeText(ReportsPage.this,
+                    "Permission already granted",
+                    Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults)
+    {
+        super
+                .onRequestPermissionsResult(requestCode,
+                        permissions,
+                        grantResults);
+
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(ReportsPage.this,
+                        "Storage Permission Granted",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+            else {
+                Toast.makeText(ReportsPage.this,
+                        "Storage Permission Denied",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -159,4 +213,6 @@ public class ReportsPage extends AppCompatActivity {
     private void toastMessage(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
+
+
 }
