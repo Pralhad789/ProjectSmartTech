@@ -40,6 +40,7 @@ public class MilkCollection extends AppCompatActivity {
         custcode = findViewById(R.id.edit_entercustcode);
         custname = findViewById(R.id.edit_custname);
         fat = findViewById(R.id.edit_fat);
+        SNF = findViewById(R.id.edit_SNF);
         lacto = findViewById(R.id.edit_lacto);
         rate = findViewById(R.id.edit_rate);
         rate.setText("2");
@@ -72,17 +73,27 @@ public class MilkCollection extends AppCompatActivity {
             }
         };
 
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Object value = dataSnapshot.getValue();
+                Log.d(TAG, "Value is: " + value);
+            }
 
-        FirebaseUser user = mAuth.getCurrentUser();
-//        String userId = user.getUid();
-//        String customercode = custcode.getText().toString();
-//        collecref = myRef.child(userId).child("CustomerDetails").child("20").child("custName");
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                toastMessage("Failed to alter database.");
+                Log.w(TAG, "Failed to read value.", databaseError.toException());
+            }
+        });
 
-
+ 
         custsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                FirebaseUser user = mAuth.getCurrentUser();
                 String userId = user.getUid();
                 String customercode = custcode.getText().toString();
                 collecref = myRef.child(userId).child("CustomerDetails").child(customercode).child("custName");
@@ -114,10 +125,6 @@ public class MilkCollection extends AppCompatActivity {
             }
         });
 
-//        int inputlitres = Integer.parseInt(litres.getText().toString());
-//        int inputrate = Integer.parseInt(rate.getText().toString());
-//        int outputamt =  inputlitres * inputrate;
-//        amount.setText(String.valueOf(outputamt));
 
         custdatasubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,28 +151,6 @@ public class MilkCollection extends AppCompatActivity {
                 Toast.makeText(MilkCollection.this, "Data Inserted Successfully",Toast.LENGTH_LONG).show();
             }
         });
-
-
-
-//        ValueEventListener valueEventListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                if (dataSnapshot.exists()) {
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                        MilkCollectionData collectionData = snapshot.getValue(MilkCollectionData.class);
-////                        artistList.add(artist);
-//
-//                    }
-//                    adapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        };
 
 
     }
