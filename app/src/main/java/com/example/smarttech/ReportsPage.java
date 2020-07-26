@@ -44,7 +44,7 @@ public class ReportsPage extends AppCompatActivity {
     EditText customercode;
     Button generatepdf;
 
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

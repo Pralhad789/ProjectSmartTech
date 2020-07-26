@@ -97,23 +97,15 @@ public class MilkCollection extends AppCompatActivity {
                 String userId = user.getUid();
                 String customercode = custcode.getText().toString();
                 collecref = myRef.child(userId).child("CustomerDetails").child(customercode).child("custName");
-                //String customercode = custcode.getText().toString();
-
-                //Query query = FirebaseDatabase.getInstance().getReference("CustomerDetails").orderByChild("custcode").equalTo(customercode);
-
+                
                 collecref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-//                        if(snapshot.hasChild(customercode))
-//                        {
+
                             String customername = snapshot.getValue(String.class);
                             custname.setText(customername);
-//                        }
-//                        else
-//                        {
-//                            Toast.makeText(MilkCollection.this,"Entered ID does not exist",Toast.LENGTH_LONG).show();
-//                        }
+
                     }
 
                     @Override
